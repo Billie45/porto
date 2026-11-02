@@ -78,3 +78,29 @@ footer{padding:40px 0 56px;color:var(--mut);font-size:.9rem}
  .hero-photo{max-width:280px;justify-self:center;grid-row:1}
 }
 @media (prefers-reduced-motion:reduce){section.sec.show{animation:none}}
+
+.project-list{display:flex;flex-direction:column;gap:1.5rem;margin:0}
+.project-item{display:block}
+.project-item .card{height:100%}
+.project-actions .project-expand{order:2;margin-left:auto}
+.project-actions a{order:1}
+.project-viewer{display:grid;grid-template-rows:auto minmax(0,1fr);max-height:0;overflow:hidden;opacity:0;transform:translateY(-1rem);transition:max-height .5s ease,opacity .35s ease,transform .5s ease,margin-top .5s ease;margin-top:0;background:var(--bs-tertiary-bg);border-radius:var(--bs-border-radius-lg);will-change:max-height,opacity,transform}
+.project-viewer.is-open{max-height:800px;opacity:1;transform:translateY(0);margin-top:1rem}
+.project-viewer-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;border-bottom:1px solid var(--bs-border-color)}
+.project-viewer-title{margin:0;font-size:1.25rem}
+.project-viewer-content{min-height:0;max-height:680px;padding:1rem;overflow:auto}
+.project-pdf{display:block;width:100%;height:100%;min-height:550px;border:0;background:#fff}
+.project-image{display:block;width:100%;height:auto;border-radius:var(--bs-border-radius);box-shadow:var(--bs-box-shadow-sm);background:#fff}
+.project-image-single{max-width:900px;margin:0 auto}
+.project-carousel{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1rem;max-width:900px;margin:0 auto}
+.project-carousel-image{grid-column:2;max-height:620px;object-fit:contain}
+.project-carousel-button{display:grid;place-items:center;width:2.5rem;height:2.5rem;padding:0;border:0;border-radius:8px;color:var(--ac);background:transparent;font-size:1.7rem;font-weight:600;line-height:1;cursor:pointer;transition:background .2s ease,color .2s ease}
+.project-carousel-button:hover,.project-carousel-button:focus-visible{color:#fff;background:var(--ac);outline:0}
+.project-carousel-prev{grid-column:1;grid-row:1}
+.project-carousel-next{grid-column:3;grid-row:1}
+.project-carousel-counter{grid-column:1/-1;text-align:center;color:var(--bs-secondary-color);font-size:.875rem}
+@media (max-width:767.98px){
+ .project-viewer-content{max-height:500px}
+ .project-carousel{gap:.5rem}
+ .project-carousel-button{width:2.15rem;height:2.15rem}
+}
