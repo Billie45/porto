@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -70,22 +72,6 @@
    <p>My academic projects include a web-based boarding house rental system designed using UML and a court database management system modeled with an ERD and a relational data model. My final project, a modified VGA-Net for retinal blood vessel segmentation, was published as a journal article. I also hold certifications in IT support (IBM), network security (Coursera), IoT (University of Illinois Urbana-Champaign), and data analytics (Google).</p>
    <p>I am proficient in application services, database systems, and IT operational support, and I adapt quickly to structured field and on-site IT service environments.</p>
   </div>
-    <div id="contact" class="mt-5 pt-4 border-top" aria-label="Contact">
-    <div class="contact-icons">
-    <a class="contact-icon" href="mailto:billiezandraw@gmail.com" aria-label="Send email" title="Email">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-     </a>
-    <a class="contact-icon" href="https://www.linkedin.com/in/billie-zandra-widiyanto/" aria-label="Open LinkedIn" title="LinkedIn">
-      <span class="linkedin-mark" aria-hidden="true">in</span>
-     </a>
-    <a class="contact-icon" href="https://github.com/Billie45" aria-label="Open GitHub" title="GitHub">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.52c.48.09.65-.21.65-.46v-1.68c-2.65.58-3.21-1.13-3.21-1.13-.44-1.1-1.07-1.39-1.07-1.39-.87-.59.07-.58.07-.58.96.07 1.47.99 1.47.99.86 1.47 2.25 1.05 2.8.8.09-.62.34-1.05.61-1.29-2.12-.24-4.35-1.06-4.35-4.72 0-1.04.37-1.89.99-2.56-.1-.24-.43-1.21.09-2.52 0 0 .81-.26 2.64.98A9.2 9.2 0 0 1 12 6.9a9.2 9.2 0 0 1 2.4.32c1.83-1.24 2.64-.98 2.64-.98.52 1.31.19 2.28.09 2.52.62.67.65 1.76.65 1.76v2.6c0 .25.17.55.66.46A9.5 9.5 0 0 0 12 2.5Z"/></svg>
-     </a>
-    <a class="contact-icon" href="tel:+6281215340395" aria-label="Call +62 812-1534-0395" title="Phone">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6.6 3.5 9 3l2 4.5-1.8 1.5a14 14 0 0 0 5.8 5.8l1.5-1.8 4.5 2-.5 2.4a2 2 0 0 1-2.2 1.6C10.9 18.1 5.9 13.1 5 5.7A2 2 0 0 1 6.6 3.5Z"/></svg>
-     </a>
-    </div>
-    </div>
  </section>
  <section id="projects" class="sec">
   <h2>Projects</h2>
@@ -150,13 +136,12 @@
  <section id="skills" class="sec">
   <h2>Skills</h2>
   <p class="lead-s">Areas I focus on and the tools I use.</p>
-  <div class="row g-4">
-   <div class="col-md-6"><div class="card h-100"><div class="card-body"><h3 class="mb-3">Machine learning</h3><div class="d-flex flex-wrap gap-2"><span class="badge tag">Python</span><span class="badge tag">TensorFlow</span><span class="badge tag">Keras</span><span class="badge tag">scikit-learn</span><span class="badge tag">NumPy</span><span class="badge tag">OpenCV</span><span class="badge tag">Computer vision</span><span class="badge tag">GAN</span></div></div></div></div>
-  <div class="col-md-6"><div class="card h-100"><div class="card-body"><h3 class="mb-3">Data engineering</h3><div class="d-flex flex-wrap gap-2"><span class="badge tag">SQL</span><span class="badge tag">MySQL</span><span class="badge tag">Data cleaning</span><span class="badge tag">pandas</span><span class="badge tag">Git and GitHub</span><span class="badge tag">Linux</span></div></div></div></div>
-  <div class="col-md-6"><div class="card h-100"><div class="card-body"><h3 class="mb-3">Data analysis</h3><div class="d-flex flex-wrap gap-2"><span class="badge tag">SQL</span><span class="badge tag">Spreadsheets</span><span class="badge tag">Tableau</span><span class="badge tag">pandas</span><span class="badge tag">Matplotlib</span><span class="badge tag">Data visualization</span></div></div></div></div>
-  <div class="col-md-6"><div class="card h-100"><div class="card-body"><h3 class="mb-3">Embedded programming</h3><div class="d-flex flex-wrap gap-2"><span class="badge tag">C/C++</span><span class="badge tag">Internet of Things</span></div></div></div></div>
-  <div class="col-md-6"><div class="card h-100"><div class="card-body"><h3 class="mb-3">Web development</h3><div class="d-flex flex-wrap gap-2"><span class="badge tag">PHP</span><span class="badge tag">Laravel</span><span class="badge tag">HTML</span><span class="badge tag">CSS</span><span class="badge tag">JavaScript</span></div></div></div></div>
+  <div class="skills-carousel" aria-label="Skills carousel">
+   <button class="skills-carousel-arrow skills-carousel-prev" type="button" aria-label="Previous skill">&#8592;</button>
+   <div class="skills-carousel-track" tabindex="0" role="region" aria-label="Skill cards"></div>
+   <button class="skills-carousel-arrow skills-carousel-next" type="button" aria-label="Next skill">&#8594;</button>
   </div>
+  <div class="skills-carousel-dots" role="group" aria-label="Choose a skill"></div>
  </section>
  <section id="experience" class="sec">
   <h2>Experience</h2>
@@ -204,10 +189,24 @@
    </div>
   </div>
  </section>
- <footer>&copy; 2026 Billie Zandra Widiyanto</footer>
-</div>
-</main>
-
+ <div id="contact" class="mt-5 pt-4 border-top" aria-label="Contact">
+  <div class="contact-icons">
+   <a class="contact-icon" href="mailto:billiezandraw@gmail.com" aria-label="Send email" title="Email">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+   </a>
+   <a class="contact-icon" href="https://www.linkedin.com/in/billie-zandra-widiyanto/" aria-label="Open LinkedIn" title="LinkedIn">
+    <span class="linkedin-mark" aria-hidden="true">in</span>
+   </a>
+   <a class="contact-icon" href="https://github.com/Billie45" aria-label="Open GitHub" title="GitHub">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-3 18.52c.48.09.65-.21.65-.46v-1.68c-2.65.58-3.21-1.13-3.21-1.13-.87-.59.07-.58.07-.58.96.07 1.47.99 1.47.99.86 1.47 2.25 1.05 2.8.8.09-.62.34-1.05.61-1.29-2.12-.24-4.35-1.06-4.35-4.72 0-1.04.37-1.89.99-2.56-.1-.24-.43-1.21.09-2.52 0 0 .81-.26 2.64.98A9.2 9.2 0 0 1 12 6.9a9.2 9.2 0 0 1 2.4.32c1.83-1.24 2.64-.98 2.64-.98.52 1.31.19 2.28.09 2.52.62.67.65 1.76.65 1.76v2.6c0 .25.17.55.66.46A9.5 9.5 0 0 0 12 2.5Z"/></svg>
+   </a>
+   <a class="contact-icon" href="tel:+6281215340395" aria-label="Call +62 812-1534-0395" title="Phone">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6.6 3.5 9 3l2 4.5-1.8 1.5a14 14 0 0 0 5.8 5.8l1.5-1.8 4.5 2-.5 2.4a2 2 0 0 1-2.2 1.6C10.9 18.1 5.9 13.1 5 5.7A2 2 0 0 1 6.6 3.5Z"/></svg>
+   </a>
+  </div>
+ </div>
+ <footer>
+ </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js" defer></script>
 </body>

@@ -27,9 +27,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .sidebar .nav-link:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
 .topbar{top:env(safe-area-inset-top,0px);z-index:1050;background:#fff}
 
-section.sec{padding:64px 0 24px;display:none}
-section.sec.show{display:block;animation:fin .25s ease}
-@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+section.sec{padding:64px 0 24px;display:block;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 70px)}
 .sec h2{font-weight:700;letter-spacing:-.02em;font-size:clamp(1.7rem,3.5vw,2.1rem);margin-bottom:6px}
 .sec p{text-align:justify}
 .sec .lead-s{color:var(--mut);margin-bottom:28px;max-width:60ch}
@@ -67,6 +65,35 @@ section.sec.show{display:block;animation:fin .25s ease}
 .contact-icon svg{width:24px;height:24px;display:block}
 .contact-icon .linkedin-mark{font-size:1.35rem;font-weight:700;line-height:1}
 footer{padding:40px 0 56px;color:var(--mut);font-size:.9rem}
+.contact-form-section{padding:2rem;max-width:760px;margin:0 auto 2rem;background:#FFF8F9;border:1px solid #F0D5DA;border-radius:16px;box-shadow:0 8px 24px rgba(109,28,43,.06)}
+.contact-form{display:grid;gap:1rem}
+.contact-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.contact-form label{display:block;margin-bottom:.4rem;font-weight:600}
+.contact-form input,.contact-form textarea{display:block;width:100%;padding:.7rem .85rem;border:1px solid var(--ln);border-radius:10px;background:#fff;color:var(--ink);font:inherit}
+.contact-form textarea{resize:vertical;min-height:120px}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--ac);outline:3px solid rgba(155,28,49,.16)}
+@media (max-width:575.98px){.contact-form-grid{grid-template-columns:1fr}}
+.skills-carousel{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1rem}
+.skills-carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;min-width:0;border-radius:16px}
+.skills-carousel-track::-webkit-scrollbar{display:none}
+.skill-card{flex:0 0 100%;scroll-snap-align:center;min-width:0}
+.skill-card .card-body{text-align:center}
+.skill-category-icon{height:64px;display:grid;place-items:center;margin-bottom:.75rem;color:var(--ac)}
+.skill-category-icon i{font-size:3.25rem}
+.sec .skill-category{color:var(--mut);margin-bottom:1.5rem;text-align:center}
+.skill-tech-grid{display:grid;grid-template-columns:repeat(auto-fit,150px);justify-content:center;gap:.6rem}
+.skill-tech{display:flex;align-items:center;justify-content:center;width:150px;gap:.55rem;min-height:44px;padding:.45rem .65rem;border:1px solid var(--ln);border-radius:999px;background:var(--bs-body-bg);color:var(--ink);font-size:.76rem;text-align:center;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.skill-tech i{flex:0 0 1.5rem;width:1.5rem;text-align:center;font-size:1.5rem;color:var(--ac);transition:transform .2s ease}
+.skill-tech:hover{border-color:var(--ac);box-shadow:0 3px 10px rgba(22,33,43,.07);transform:translateY(-1px)}
+.skill-tech:hover i,.skill-category-icon:hover i{transform:scale(1.1)}
+.skills-carousel-arrow{width:2.5rem;height:2.5rem;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:var(--acs);color:var(--ac);font-size:1.6rem;line-height:1;cursor:pointer}
+.skills-carousel-arrow:hover,.skills-carousel-arrow:focus-visible{background:var(--ac);color:#fff}
+.skills-carousel-track.is-dragging{scroll-behavior:auto;cursor:grabbing}
+.skills-carousel-dots{display:flex;justify-content:center;gap:.55rem;margin-top:1.25rem}
+.skills-carousel-dot{width:.7rem;height:.7rem;padding:0;border:1px solid var(--ac);border-radius:50%;background:transparent;cursor:pointer}
+.skills-carousel-dot.is-active{background:var(--ac);box-shadow:0 0 0 3px rgba(155,28,49,.14)}
+@media (max-width:575.98px){.skills-carousel{gap:.5rem}.skills-carousel-arrow{width:2.15rem;height:2.15rem;font-size:1.35rem}}
+@media (max-width:575.98px){.skill-category-icon{height:48px}.skill-category-icon i{font-size:2.5rem}.skill-tech-grid{grid-template-columns:150px;gap:.5rem}.skill-tech{min-height:40px;padding:.4rem .6rem;font-size:.72rem}.skill-tech i{font-size:1.35rem}}
 @media (max-width:991.98px){
  .hero{padding-top:40px}
  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(190px,280px);gap:28px}
@@ -77,7 +104,6 @@ footer{padding:40px 0 56px;color:var(--mut);font-size:.9rem}
  .hero-grid{grid-template-columns:1fr}
  .hero-photo{max-width:280px;justify-self:center;grid-row:1}
 }
-@media (prefers-reduced-motion:reduce){section.sec.show{animation:none}}
 
 .project-list{display:flex;flex-direction:column;gap:1.5rem;margin:0}
 .project-item{display:block}
