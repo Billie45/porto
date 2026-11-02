@@ -15,15 +15,17 @@ document.querySelectorAll('a.cert').forEach(function(cert){
  cert.replaceWith(row);
 });
 function show(){
- var page=document.body.dataset.page||'home';
- secs.forEach(function(s){s.classList.add('show')});
+ var id=(location.hash||'#home').slice(1);
+ if(!document.querySelector('section.sec[id="'+id+'"]')) id='home';
+ secs.forEach(function(s){s.classList.toggle('show',s.id===id)});
  links.forEach(function(a){
-  var on=a.getAttribute('href')===(page==='home'?'index.html':page+'.html');
+  var on=a.getAttribute('href')==='#'+id;
   a.classList.toggle('active',on);
   if(on) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
  });
  window.scrollTo({top:0,behavior:'instant'});
 }
+window.addEventListener('hashchange',show);
 show();
 links.forEach(function(a){
  a.addEventListener('click',function(){
