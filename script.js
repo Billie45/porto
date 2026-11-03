@@ -42,6 +42,12 @@ var skillData=[
 ];
 var skillsTrack=document.querySelector('.skills-carousel-track');
 var skillDotsContainer=document.querySelector('.skills-carousel-dots');
+var skillCards=[];
+var skillDots=[];
+var activeSkill=0;
+var skillTimer;
+var skillHovering=false;
+var skillReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 function getSkillIcon(tech){
  return tech.icon||'fa-solid fa-code';
 }
@@ -60,82 +66,91 @@ if(skillsTrack&&skillDotsContainer){
   if(index===0) dot.setAttribute('aria-current','true');
   skillDotsContainer.appendChild(dot);
  });
+ skillCards=Array.prototype.slice.call(skillsTrack.querySelectorAll('.skill-card'));
+ skillDots=Array.prototype.slice.call(document.querySelectorAll('.skills-carousel-dot'));
 }
-var links=document.querySelectorAll('#sbnav a');
-var skillCards=skillsTrack?skillsTrack.querySelectorAll('.skill-card'):[];
-var skillDots=document.querySelectorAll('.skills-carousel-dot');
-var activeSkill=0;
-var skillScrollFrame;
-function scrollToSkill(index){
- if(!skillsTrack||!skillCards.length) return;
- activeSkill=(index+skillCards.length)%skillCards.length;
- skillsTrack.scrollTo({left:skillsTrack.clientWidth*activeSkill,behavior:'smooth'});
- updateSkillDots();
+function skillOffset(index){
+ var offset=(index-activeSkill+skillCards.length)%skillCards.length;
+ return offset>skillCards.length/2?offset-skillCards.length:offset;
 }
-function updateSkillDots(){
+function renderSkillsCarousel(){
+ skillCards.forEach(function(card,index){
+  var offset=skillOffset(index);
+  card.classList.remove('is-prev','is-active','is-next');
+  if(offset===-1) card.classList.add('is-prev');
+  if(offset===0) card.classList.add('is-active');
+  if(offset===1) card.classList.add('is-next');
+  card.setAttribute('aria-hidden',offset===0?'false':'true');
+ });
  skillDots.forEach(function(dot,index){
   var active=index===activeSkill;
   dot.classList.toggle('is-active',active);
   if(active) dot.setAttribute('aria-current','true'); else dot.removeAttribute('aria-current');
  });
 }
+function scrollToSkill(index){
+ if(!skillsTrack||!skillCards.length) return;
+ activeSkill=(index+skillCards.length)%skillCards.length;
+ renderSkillsCarousel();
+}
+function updateSkillDots(){
+ renderSkillsCarousel();
+}
+function stopSkillAutoplay(){
+ window.clearInterval(skillTimer);
+ skillTimer=null;
+}
+function startSkillAutoplay(){
+ if(skillReducedMotion||skillHovering) return;
+ stopSkillAutoplay();
+ skillTimer=window.setInterval(function(){scrollToSkill(activeSkill+1)},4000);
+}
 if(skillsTrack){
- skillsTrack.addEventListener('scroll',function(){
-  window.cancelAnimationFrame(skillScrollFrame);
-  skillScrollFrame=window.requestAnimationFrame(function(){
-   activeSkill=Math.round(skillsTrack.scrollLeft/skillsTrack.clientWidth);
-   updateSkillDots();
-  });
- });
  skillsTrack.addEventListener('keydown',function(event){
   if(event.key==='ArrowLeft'||event.key==='ArrowRight'){
    event.preventDefault();
    scrollToSkill(activeSkill+(event.key==='ArrowRight'?1:-1));
   }
  });
- var dragging=false,startX=0,lastX=0,startScroll=0;
- var touchStartX=0,touchStartScroll=0;
- skillsTrack.addEventListener('touchstart',function(event){
-  touchStartX=event.changedTouches[0].pageX;
-  touchStartScroll=skillsTrack.scrollLeft;
- },{passive:true});
- skillsTrack.addEventListener('touchend',function(event){
-  var touchEndX=event.changedTouches[0].pageX;
-  var atStart=touchStartScroll<=2;
-  var atEnd=touchStartScroll>=skillsTrack.scrollWidth-skillsTrack.clientWidth-2;
-  if(atEnd&&touchEndX<touchStartX) scrollToSkill(0);
-  if(atStart&&touchEndX>touchStartX) scrollToSkill(skillCards.length-1);
- },{passive:true});
- skillsTrack.addEventListener('mousedown',function(event){
+ var dragging=false,startX=0;
+ skillsTrack.addEventListener('pointerdown',function(event){
+  skillHovering=true;
+  stopSkillAutoplay();
   dragging=true;
-  startX=event.pageX;
-  lastX=event.pageX;
-  startScroll=skillsTrack.scrollLeft;
+  startX=event.clientX;
+  skillsTrack.setPointerCapture(event.pointerId);
   skillsTrack.classList.add('is-dragging');
  });
- skillsTrack.addEventListener('mousemove',function(event){
+ skillsTrack.addEventListener('pointermove',function(event){
   if(!dragging) return;
-  event.preventDefault();
-  lastX=event.pageX;
-  skillsTrack.scrollLeft=startScroll-(event.pageX-startX);
+  if(Math.abs(event.clientX-startX)>8) event.preventDefault();
  });
- function stopDragging(){
+ function stopDragging(event){
   if(!dragging) return;
   dragging=false;
   skillsTrack.classList.remove('is-dragging');
-  var current=Math.round(skillsTrack.scrollLeft/skillsTrack.clientWidth);
-  var atStart=startScroll<=2;
-  var atEnd=startScroll>=skillsTrack.scrollWidth-skillsTrack.clientWidth-2;
-  if(atEnd&&lastX<startX) current=0;
-  if(atStart&&lastX>startX) current=skillCards.length-1;
-  scrollToSkill(current);
+  var distance=event.clientX-startX;
+  if(Math.abs(distance)>50) scrollToSkill(activeSkill+(distance<0?1:-1));
+  skillHovering=false;
+  startSkillAutoplay();
  }
- skillsTrack.addEventListener('mouseup',stopDragging);
- skillsTrack.addEventListener('mouseleave',stopDragging);
+ skillsTrack.addEventListener('pointerup',stopDragging);
+ skillsTrack.addEventListener('pointercancel',stopDragging);
+ skillsTrack.addEventListener('mouseenter',function(){skillHovering=true;stopSkillAutoplay()});
+ skillsTrack.addEventListener('mouseleave',function(){skillHovering=false;startSkillAutoplay()});
+ skillCards.forEach(function(card,index){
+  card.addEventListener('click',function(){
+   var offset=skillOffset(index);
+   if(Math.abs(offset)===1) scrollToSkill(activeSkill+offset);
+  });
+ });
  document.querySelector('.skills-carousel-prev').addEventListener('click',function(){scrollToSkill(activeSkill-1)});
  document.querySelector('.skills-carousel-next').addEventListener('click',function(){scrollToSkill(activeSkill+1)});
  skillDots.forEach(function(dot,index){dot.addEventListener('click',function(){scrollToSkill(index)})});
+ renderSkillsCarousel();
+ startSkillAutoplay();
 }
+var links=document.querySelectorAll('#sbnav a');
 var contactForm=document.getElementById('contact-form');
 if(contactForm){
  contactForm.addEventListener('submit',function(event){
@@ -273,3 +288,126 @@ document.querySelectorAll('.project-expand').forEach(function(button){
 document.addEventListener('keydown',function(event){
  if(event.key==='Escape'&&openProjectViewer) closeProjectViewer(openProjectViewer,true);
 });
+
+var certificateGallery=document.querySelector('.cert-gallery');
+var certificateLightbox;
+var certificateLightboxImage;
+var certificateLightboxClose;
+var certificateLastTrigger;
+if(certificateGallery){
+ var certificateCards=Array.prototype.slice.call(certificateGallery.querySelectorAll('.cert-card'));
+ var certificateName=document.querySelector('.cert-gallery-name');
+ var certificatePosition=document.querySelector('.cert-gallery-position');
+ var certificateIndex=0;
+ var certificateTimer;
+ var certificateHovering=false;
+ var certificateReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function certificateLabel(card){
+  var source=card.querySelector('img').getAttribute('src').split('/').pop();
+  return source.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ').trim();
+ }
+ function certificateOffset(index){
+  var offset=(index-certificateIndex+certificateCards.length)%certificateCards.length;
+  return offset>certificateCards.length/2?offset-certificateCards.length:offset;
+ }
+ function renderCertificateCarousel(){
+  certificateCards.forEach(function(card,index){
+   var offset=certificateOffset(index);
+   card.classList.remove('is-prev','is-active','is-next');
+   if(offset===-1) card.classList.add('is-prev');
+   if(offset===0) card.classList.add('is-active');
+   if(offset===1) card.classList.add('is-next');
+   card.setAttribute('aria-hidden',offset===0?'false':'true');
+   card.querySelector('img').loading=offset===0?'eager':'lazy';
+  });
+  certificateName.textContent=certificateLabel(certificateCards[certificateIndex]);
+  certificatePosition.textContent=(certificateIndex+1)+' / '+certificateCards.length;
+ }
+ function moveCertificate(step){
+  certificateIndex=(certificateIndex+step+certificateCards.length)%certificateCards.length;
+  renderCertificateCarousel();
+ }
+ function stopCertificateAutoplay(){
+  window.clearInterval(certificateTimer);
+  certificateTimer=null;
+ }
+ function startCertificateAutoplay(){
+  if(certificateReducedMotion||certificateHovering) return;
+  stopCertificateAutoplay();
+  certificateTimer=window.setInterval(function(){moveCertificate(1)},4000);
+ }
+ certificateLightbox=document.createElement('div');
+ certificateLightbox.className='cert-lightbox';
+ certificateLightbox.setAttribute('role','dialog');
+ certificateLightbox.setAttribute('aria-modal','true');
+ certificateLightbox.setAttribute('aria-label','Certificate preview');
+ certificateLightbox.innerHTML='<button class="cert-lightbox-close" type="button" aria-label="Close certificate preview">&times;</button><img alt="">';
+ document.body.appendChild(certificateLightbox);
+ certificateLightboxImage=certificateLightbox.querySelector('img');
+ certificateLightboxClose=certificateLightbox.querySelector('.cert-lightbox-close');
+ function closeCertificateLightbox(){
+  certificateLightbox.classList.remove('is-open');
+  document.body.style.overflow='';
+  if(certificateLastTrigger) certificateLastTrigger.focus();
+ }
+ function openCertificateLightbox(image){
+  certificateLastTrigger=image;
+  certificateLightboxImage.src=image.src;
+  certificateLightboxImage.alt=image.alt;
+  certificateLightbox.classList.add('is-open');
+  document.body.style.overflow='hidden';
+  certificateLightboxClose.focus();
+ }
+ certificateCards.forEach(function(card,index){
+  card.addEventListener('click',function(){
+   if(Math.abs(certificateOffset(index))===1){
+    moveCertificate(certificateOffset(index));
+    return;
+   }
+   openCertificateLightbox(card.querySelector('img'));
+  });
+ });
+ certificateLightboxClose.addEventListener('click',closeCertificateLightbox);
+ certificateLightbox.addEventListener('click',function(event){
+  if(event.target===certificateLightbox) closeCertificateLightbox();
+ });
+ document.addEventListener('keydown',function(event){
+  if(event.key==='Escape'&&certificateLightbox.classList.contains('is-open')) closeCertificateLightbox();
+ });
+ var dragging=false,startX=0;
+ certificateGallery.addEventListener('pointerdown',function(event){
+  certificateHovering=true;
+  stopCertificateAutoplay();
+  dragging=true;
+  startX=event.clientX;
+  certificateGallery.setPointerCapture(event.pointerId);
+  certificateGallery.classList.add('is-dragging');
+ });
+ certificateGallery.addEventListener('pointermove',function(event){
+  if(!dragging) return;
+  if(Math.abs(event.clientX-startX)>8) event.preventDefault();
+ });
+ function stopCertificateDragging(event){
+  if(!dragging) return;
+  dragging=false;
+  certificateGallery.classList.remove('is-dragging');
+  var distance=event.clientX-startX;
+  if(Math.abs(distance)>50) moveCertificate(distance<0?1:-1);
+  certificateHovering=false;
+  startCertificateAutoplay();
+ }
+ certificateGallery.addEventListener('pointerup',stopCertificateDragging);
+ certificateGallery.addEventListener('pointercancel',stopCertificateDragging);
+ certificateGallery.addEventListener('mouseenter',function(){certificateHovering=true;stopCertificateAutoplay()});
+ certificateGallery.addEventListener('mouseleave',function(){certificateHovering=false;startCertificateAutoplay()});
+ document.querySelector('.cert-gallery-prev').addEventListener('click',function(){moveCertificate(-1)});
+ document.querySelector('.cert-gallery-next').addEventListener('click',function(){moveCertificate(1)});
+ certificateGallery.addEventListener('keydown',function(event){
+  if(event.key==='ArrowLeft'||event.key==='ArrowRight'){
+   event.preventDefault();
+   moveCertificate(event.key==='ArrowRight'?1:-1);
+  }
+ });
+ renderCertificateCarousel();
+ startCertificateAutoplay();
+}
