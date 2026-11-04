@@ -73,6 +73,19 @@ function skillOffset(index){
  var offset=(index-activeSkill+skillCards.length)%skillCards.length;
  return offset>skillCards.length/2?offset-skillCards.length:offset;
 }
+function resizeSkillTrack(){
+ if(!skillsTrack||!skillCards.length) return;
+ if(window.matchMedia('(max-width:575.98px)').matches){
+  skillsTrack.style.height='auto';
+  var tallestCard=0;
+  skillCards.forEach(function(card){
+   tallestCard=Math.max(tallestCard,card.scrollHeight);
+  });
+  if(tallestCard) skillsTrack.style.height=tallestCard+'px';
+ } else {
+  skillsTrack.style.height='';
+ }
+}
 function renderSkillsCarousel(){
  skillCards.forEach(function(card,index){
   var offset=skillOffset(index);
@@ -87,6 +100,7 @@ function renderSkillsCarousel(){
   dot.classList.toggle('is-active',active);
   if(active) dot.setAttribute('aria-current','true'); else dot.removeAttribute('aria-current');
  });
+ resizeSkillTrack();
 }
 function scrollToSkill(index){
  if(!skillsTrack||!skillCards.length) return;
@@ -150,6 +164,7 @@ if(skillsTrack){
  renderSkillsCarousel();
  startSkillAutoplay();
 }
+window.addEventListener('resize',resizeSkillTrack);
 var links=document.querySelectorAll('#sbnav a');
 var contactForm=document.getElementById('contact-form');
 if(contactForm){
@@ -188,7 +203,7 @@ show();
 links.forEach(function(a){
  a.addEventListener('click',function(){
   if(window.matchMedia('(max-width: 991.98px)').matches&&window.bootstrap){
-   var oc=bootstrap.Offcanvas.getInstance(document.getElementById('sb')); if(oc) oc.hide();
+   var oc=bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('sb')); oc.hide();
   }
  });
 });

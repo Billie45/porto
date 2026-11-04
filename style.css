@@ -98,7 +98,7 @@ section.sec{padding:64px 0 24px;display:block;scroll-margin-top:calc(env(safe-ar
 .skills-carousel-dots{display:flex;justify-content:center;gap:.55rem;margin-top:1.25rem}
 .skills-carousel-dot{width:.7rem;height:.7rem;padding:0;border:1px solid var(--ac);border-radius:50%;background:transparent;cursor:pointer}
 .skills-carousel-dot.is-active{background:var(--ac);box-shadow:0 0 0 3px rgba(155,28,49,.14)}
-@media (max-width:575.98px){.skills-carousel{gap:.5rem}.skills-carousel-track{height:480px}.skills-carousel-arrow{width:2.15rem;height:2.15rem;font-size:1.35rem}.skill-card{width:78%;overflow-y:auto}.skill-card.is-prev{transform:translateX(calc(-50% - 52%)) scale(.8) rotateY(25deg)}.skill-card.is-next{transform:translateX(calc(-50% + 52%)) scale(.8) rotateY(-25deg)}}
+@media (max-width:575.98px){.skills-carousel{gap:.5rem}.skills-carousel-track{height:auto}.skills-carousel-arrow{width:2.15rem;height:2.15rem;font-size:1.35rem}.skill-card{width:78%;height:auto;min-height:0;overflow:visible}.skill-card.is-prev{transform:translateX(calc(-50% - 52%)) scale(.8) rotateY(25deg)}.skill-card.is-next{transform:translateX(calc(-50% + 52%)) scale(.8) rotateY(-25deg)}}
 @media (max-width:575.98px){.skill-category-icon{height:48px}.skill-category-icon i{font-size:2.5rem}.skill-tech-grid{grid-template-columns:150px;gap:.5rem}.skill-tech{min-height:40px;padding:.4rem .6rem;font-size:.72rem}.skill-tech i{font-size:1.35rem}}
 @media (prefers-reduced-motion:reduce){.skill-card{transition:none}.skill-card.is-active:hover{transform:translateX(-50%) scale(1)}}
 .cert-gallery-wrap{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr) auto;align-items:center;gap:12px;margin:1.5rem 0 2rem}
